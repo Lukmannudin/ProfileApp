@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/itemProfile"
+        android:enabled="true"
+        android:title="profil"
+        android:icon="@drawable/ic_person_black_24dp"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/itemContact"
+        android:enabled="true"
+        android:icon="@drawable/ic_email_black_24dp"
+        android:title="kontak"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/itemListFriends"
+        android:enabled="true"
+        android:title="daftar teman"
+        android:icon="@drawable/ic_people_black_24dp"
+        app:showAsAction="ifRoom"
+        />
+
+</menu>
