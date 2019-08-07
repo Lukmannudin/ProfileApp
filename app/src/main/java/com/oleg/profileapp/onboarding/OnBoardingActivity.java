@@ -11,7 +11,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.oleg.profileapp.R;
 import com.oleg.profileapp.login.LoginActivity;
-import com.oleg.profileapp.main.MainActivity;
+import com.oleg.profileapp.util.Preferences;
 
 import me.relex.circleindicator.CircleIndicator;
 
@@ -25,12 +25,14 @@ public class OnBoardingActivity extends AppCompatActivity {
     PagerAdapter pagerAdapter;
     CircleIndicator indicator;
     TextView btnFinish;
+    TextView btnDontShow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_on_boarding);
         btnFinish = findViewById(R.id.btn_finish);
+        btnDontShow = findViewById(R.id.onboarding_dont_show_again);
 
         viewPager = findViewById(R.id.vp_onboarding);
         pagerAdapter = new OnBoardingAdapter(getSupportFragmentManager());
@@ -41,9 +43,18 @@ public class OnBoardingActivity extends AppCompatActivity {
         viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
         setupViewPager(viewPager);
 
-        btnFinish.setOnClickListener(v -> {
+        if (Preferences.getInstance(this).onBoardingStopped()) {
             Intent intent = new Intent(OnBoardingActivity.this, LoginActivity.class);
             startActivity(intent);
+        }
+
+        btnDontShow.setOnClickListener(v -> {
+            Preferences.getInstance(this).setOnBoardingStopped(true);
+            startActivity(new Intent(OnBoardingActivity.this, LoginActivity.class));
+        });
+
+        btnFinish.setOnClickListener(v -> {
+            startActivity(new Intent(OnBoardingActivity.this, LoginActivity.class));
         });
     }
 

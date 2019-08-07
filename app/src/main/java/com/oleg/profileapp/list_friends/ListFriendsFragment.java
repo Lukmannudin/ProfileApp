@@ -24,8 +24,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.oleg.profileapp.model.User;
 import com.oleg.profileapp.R;
+import com.oleg.profileapp.model.Friend;
+import com.oleg.profileapp.model.User;
+import com.oleg.profileapp.util.Preferences;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,12 +41,13 @@ import java.util.Objects;
 public class ListFriendsFragment extends Fragment implements ListFriendsContract.View {
 
     private ListFriendsContract.Presenter mPresenter;
-    private List<User> userList = new ArrayList<>();
+    private List<Friend> friendList = new ArrayList<>();
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private Button btnEdit;
+    private Button btnUpdate;
     private FrameLayout frameLayout;
+    private Dialog dialog;
 
     TextView nim, nama, kelas, email, telepon, instagram, facebook, twitter;
     LinearLayout linearLayout;
@@ -57,7 +60,7 @@ public class ListFriendsFragment extends Fragment implements ListFriendsContract
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter = new ListFriendsPresenter(frameLayout,this);
+        mPresenter = new ListFriendsPresenter(frameLayout, this);
     }
 
     @Override
@@ -77,7 +80,7 @@ public class ListFriendsFragment extends Fragment implements ListFriendsContract
         super.onActivityCreated(savedInstanceState);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        mAdapter = new ListFriendsAdapter(userList, mItemListener);
+        mAdapter = new ListFriendsAdapter(friendList, mItemListener);
 
         DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
                 1);
@@ -92,14 +95,14 @@ public class ListFriendsFragment extends Fragment implements ListFriendsContract
     }
 
     @Override
-    public void showListFriends(List<User> users) {
-        userList.clear();
-        userList.addAll(users);
+    public void showListFriends(List<Friend> friends) {
+        friendList.clear();
+        friendList.addAll(friends);
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void showFriendDetailUI(List<User> users, User user, int index) {
+    public void showFriendDetailUI(List<Friend> friends, Friend friend, int index) {
         // intent ke user detail
         final Dialog dialog = new Dialog(Objects.requireNonNull(getActivity()));
         dialog.setContentView(R.layout.activity_friend_detail);
@@ -114,34 +117,33 @@ public class ListFriendsFragment extends Fragment implements ListFriendsContract
         twitter = dialog.findViewById(R.id.tv_friend_detail_twitter);
         facebook = dialog.findViewById(R.id.tv_friend_detail_facebook);
 
-        btnEdit = dialog.findViewById(R.id.btn_edit);
+        btnUpdate = dialog.findViewById(R.id.btn_update);
 
-        nim.setText(user.getNim());
-        nama.setText(user.getUsername());
-        kelas.setText(user.getKelas());
-        email.setText(user.getEmail());
-        telepon.setText(user.getTelepon());
-        instagram.setText(user.getInstagram());
-        twitter.setText(user.getTwitter());
-        facebook.setText(user.getFacebook());
+        nim.setText(friend.getNim());
+        nama.setText(friend.getUsername());
+        kelas.setText(friend.getKelas());
+        email.setText(friend.getEmail());
+        telepon.setText(friend.getTelepon());
+        instagram.setText(friend.getInstagram());
+        twitter.setText(friend.getTwitter());
+        facebook.setText(friend.getFacebook());
 
-        btnEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                user.setNim(nim.getText().toString());
-                user.setUsername(nama.getText().toString());
-                user.setKelas(kelas.getText().toString());
-                user.setEmail(email.getText().toString());
-                user.setTelepon(telepon.getText().toString());
-                user.setInstagram(instagram.getText().toString());
-                user.setTwitter(twitter.getText().toString());
-                user.setFacebook(facebook.getText().toString());
-                users.set(index, user);
-                mAdapter = new ListFriendsAdapter(users,mItemListener);
-                recyclerView.setAdapter(mAdapter);
-                dialog.dismiss();
-                    Snackbar.make(frameLayout,"Data Berhasil Diubah",Snackbar.LENGTH_LONG).show();
-            }
+        btnUpdate.setOnClickListener(v -> {
+            friend.setNim(nim.getText().toString());
+            friend.setUsername(nama.getText().toString());
+            friend.setKelas(kelas.getText().toString());
+            friend.setEmail(email.getText().toString());
+            friend.setTelepon(telepon.getText().toString());
+            friend.setInstagram(instagram.getText().toString());
+            friend.setTwitter(twitter.getText().toString());
+            friend.setFacebook(facebook.getText().toString());
+
+            mPresenter.onEditFriend(friend);
+
+            mAdapter = new ListFriendsAdapter(friends, mItemListener);
+            recyclerView.setAdapter(mAdapter);
+            dialog.dismiss();
+            Snackbar.make(frameLayout, "Data Berhasil Diubah", Snackbar.LENGTH_LONG).show();
         });
 
         dialog.show();
@@ -159,107 +161,108 @@ public class ListFriendsFragment extends Fragment implements ListFriendsContract
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.start();
+        mPresenter.start(getActivity());
     }
 
 
     // Saat salah satu item pada list di klik
-    ListFriendsListener mItemListener = new ListFriendsListener() {
+    private ListFriendsListener mItemListener = new ListFriendsListener() {
         @Override
-        public void onListFriendClick(List<User> users, User clickedListUser, int index) {
-            mPresenter.openDetailFriendDetail(users, clickedListUser, index);
-
+        public void onListFriendClick(List<Friend> friends, Friend clickedListFriend, int index) {
+            mPresenter.openDetailFriendDetail(friends, clickedListFriend, index);
         }
 
         @Override
-        public void onBtnCallClick(User clickedListUser) {
-            mPresenter.onCallFriend(clickedListUser);
+        public void onBtnCallClick(Friend clickedListFriend) {
+            mPresenter.onCallFriend(clickedListFriend);
         }
 
         @Override
-        public void onBtnDeleteClick(User clickedListUser) {
-            mPresenter.onDeleteFriend(clickedListUser);
+        public void onBtnDeleteClick(Friend clickeListFriend) {
+            mPresenter.onDeleteFriend(clickeListFriend);
         }
     };
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.list_friend_menu,menu);
+        inflater.inflate(R.menu.list_friend_menu, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.tambah_teman) {
+            dialog = new Dialog(Objects.requireNonNull(getActivity()));
+            dialog.setContentView(R.layout.activity_friend_detail);
+            dialog.setTitle("Tambah Teman");
 
-        switch (item.getItemId()){
-           case R.id.tambah_teman:
-               final Dialog dialog = new Dialog(Objects.requireNonNull(getActivity()));
-               dialog.setContentView(R.layout.activity_friend_detail);
-               dialog.setTitle("Tambah Teman");
-               nim = dialog.findViewById(R.id.tv_friend_detail_nim);
-               nama = dialog.findViewById(R.id.tv_friend_detail_nama);
-               kelas = dialog.findViewById(R.id.tv_friend_detail_kelas);
-               email = dialog.findViewById(R.id.tv_friend_detail_email);
-               telepon = dialog.findViewById(R.id.tv_friend_detail_telepon);
-               instagram = dialog.findViewById(R.id.tv_friend_detail_instagram);
-               twitter = dialog.findViewById(R.id.tv_friend_detail_twitter);
-               facebook = dialog.findViewById(R.id.tv_friend_detail_facebook);
+            nim = dialog.findViewById(R.id.tv_friend_detail_nim);
+            nama = dialog.findViewById(R.id.tv_friend_detail_nama);
+            kelas = dialog.findViewById(R.id.tv_friend_detail_kelas);
+            email = dialog.findViewById(R.id.tv_friend_detail_email);
+            telepon = dialog.findViewById(R.id.tv_friend_detail_telepon);
+            instagram = dialog.findViewById(R.id.tv_friend_detail_instagram);
+            twitter = dialog.findViewById(R.id.tv_friend_detail_twitter);
+            facebook = dialog.findViewById(R.id.tv_friend_detail_facebook);
+            btnUpdate = dialog.findViewById(R.id.btn_update);
+            btnUpdate.setText("Tambah");
 
-               btnEdit = dialog.findViewById(R.id.btn_edit);
-               btnEdit.setText("Tambah");
+            Friend friend = new Friend();
+            nim.setText(friend.getNim());
+            nama.setText(friend.getUsername());
+            kelas.setText(friend.getKelas());
+            email.setText(friend.getEmail());
+            telepon.setText(friend.getTelepon());
+            instagram.setText(friend.getInstagram());
+            twitter.setText(friend.getTwitter());
+            facebook.setText(friend.getFacebook());
 
-               User user = new User();
+            btnUpdate.setOnClickListener(v -> {
+                friend.setNim(nim.getText().toString());
+                friend.setUsername(nama.getText().toString());
+                friend.setKelas(kelas.getText().toString());
+                friend.setEmail(email.getText().toString());
+                friend.setTelepon(telepon.getText().toString());
+                friend.setInstagram(instagram.getText().toString());
+                friend.setTwitter(twitter.getText().toString());
+                friend.setFacebook(facebook.getText().toString());
 
-               nim.setText(user.getNim());
-               nama.setText(user.getUsername());
-               kelas.setText(user.getKelas());
-               email.setText(user.getEmail());
-               telepon.setText(user.getTelepon());
-               instagram.setText(user.getInstagram());
-               twitter.setText(user.getTwitter());
-               facebook.setText(user.getFacebook());
+                User currentUser = Preferences.getInstance(getActivity()).getUserLogin();
+                friend.setUserid(currentUser.getId());
 
-               btnEdit.setOnClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View v) {
-                       user.setNim(nim.getText().toString());
-                       user.setUsername(nama.getText().toString());
-                       user.setKelas(kelas.getText().toString());
-                       user.setEmail(email.getText().toString());
-                       user.setTelepon(telepon.getText().toString());
-                       user.setInstagram(instagram.getText().toString());
-                       user.setTwitter(twitter.getText().toString());
-                       user.setFacebook(facebook.getText().toString());
+                if (nim.getText().toString().isEmpty() || nama.getText().toString().isEmpty() || kelas.getText().toString().isEmpty()
+                        || telepon.getText().toString().isEmpty() || email.getText().toString().isEmpty()
+                ) {
+                    Toast.makeText(getActivity(), "Please complete your fields!", Toast.LENGTH_LONG).show();
+                } else {
+                    mPresenter.addNewFriend(friend);
+                }
 
+                dialog.dismiss();
+            });
 
-                       if (nim.getText().toString().isEmpty() || nama.getText().toString().isEmpty() || kelas.getText().toString().isEmpty()
-                            || telepon.getText().toString().isEmpty() || email.getText().toString().isEmpty()
-                       ){
-                            Toast.makeText(getActivity(),"Tolong lengkapi isian anda!",Toast.LENGTH_LONG).show();
-                       } else {
-                           userList.add(user);
-                           mAdapter = new ListFriendsAdapter(userList,mItemListener);
-                           recyclerView.setAdapter(mAdapter);
-                           Snackbar.make(frameLayout,"Data Berhasil Ditambahkan",Snackbar.LENGTH_LONG).show();
-                       }
-
-                       dialog.dismiss();
-                   }
-               });
-
-               dialog.show();
-               Window window = dialog.getWindow();
-               assert window != null;
-               window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialog.show();
+            Window window = dialog.getWindow();
+            assert window != null;
+            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         }
 
         return super.onOptionsItemSelected(item);
-
     }
 
     @Override
     public void showMessage(String message) {
-        Snackbar.make(frameLayout,message,Snackbar.LENGTH_LONG).show();
+        Snackbar.make(frameLayout, message, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showMessageSuccess(Friend friend, String message) {
+        Snackbar.make(frameLayout, message, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showMessageFailed(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -268,10 +271,10 @@ public class ListFriendsFragment extends Fragment implements ListFriendsContract
     }
 
     interface ListFriendsListener {
-        void onListFriendClick(List<User> users, User clickedListUser, int index);
+        void onListFriendClick(List<Friend> users, Friend clickedListUser, int index);
 
-        void onBtnCallClick(User clickedListUser);
+        void onBtnCallClick(Friend clickedListUser);
 
-        void onBtnDeleteClick(User clickedListUser);
+        void onBtnDeleteClick(Friend clickedListUser);
     }
 }

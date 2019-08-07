@@ -3,7 +3,7 @@ package com.oleg.profileapp.login;
 import android.content.Context;
 
 import com.oleg.profileapp.model.User;
-import com.oleg.profileapp.repo.Repository;
+import com.oleg.profileapp.repo.UserRepository;
 
 
 // Tanggal Pengerjaan : 19 Mei 2019
@@ -15,11 +15,11 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     private final LoginContract.View mLoginView;
 
-    private Repository db;
+    private UserRepository db;
 
     public LoginPresenter(LoginContract.View mLoginView) {
         this.mLoginView = mLoginView;
-        db = Repository.getInstance((Context) mLoginView);
+        db = UserRepository.getInstance((Context) mLoginView);
     }
 
     @Override

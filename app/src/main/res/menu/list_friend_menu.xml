@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/tambah_teman"
         android:enabled="true"
-        android:orderInCategory="2"
         android:title="Tambah Teman"
         android:icon="@drawable/ic_add_white_24dp"
         app:showAsAction="always"

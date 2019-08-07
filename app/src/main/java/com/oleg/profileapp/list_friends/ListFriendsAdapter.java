@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.oleg.profileapp.model.Friend;
 import com.oleg.profileapp.model.User;
 import com.oleg.profileapp.R;
 
@@ -22,12 +23,11 @@ import java.util.List;
 
 public class ListFriendsAdapter extends RecyclerView.Adapter<ListFriendsAdapter.ViewHolder> {
 
-    private List<User> mDataSet;
+    private List<Friend> mDataSet;
     private ListFriendsFragment.ListFriendsListener listener;
 
-    public ListFriendsAdapter(List<User> mDataSet, ListFriendsFragment.ListFriendsListener listener) {
+    ListFriendsAdapter(List<Friend> mDataSet, ListFriendsFragment.ListFriendsListener listener) {
         this.mDataSet = mDataSet;
-        Log.d("cek", "ListFriendsAdapter: "+mDataSet.size());
         this.listener = listener;
     }
 
@@ -35,8 +35,7 @@ public class ListFriendsAdapter extends RecyclerView.Adapter<ListFriendsAdapter.
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_friend,parent,false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -49,40 +48,25 @@ public class ListFriendsAdapter extends RecyclerView.Adapter<ListFriendsAdapter.
         return mDataSet.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder{
         TextView tvName;
         ImageView btnDelete;
         ImageView btnCalling;
-        public ViewHolder(@NonNull View itemView) {
+
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.item_friend_nama);
             btnDelete = itemView.findViewById(R.id.btn_friend_delete);
             btnCalling = itemView.findViewById(R.id.btnTelepon);
         }
 
-        void bindItem(final User user, final ListFriendsFragment.ListFriendsListener listener, int position){
-            tvName.setText(user.getUsername());
-            btnDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onBtnDeleteClick(user);
-                }
-            });
+        void bindItem(final Friend friend, final ListFriendsFragment.ListFriendsListener listener, int position){
+            tvName.setText(friend.getUsername());
+            btnDelete.setOnClickListener(v -> listener.onBtnDeleteClick(friend));
 
-            btnCalling.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onBtnCallClick(user);
-                }
-            });
+            btnCalling.setOnClickListener(v -> listener.onBtnCallClick(friend));
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onListFriendClick(mDataSet, user, position);
-                }
-            });
-
+            itemView.setOnClickListener(v -> listener.onListFriendClick(mDataSet, friend, position));
 
         }
 

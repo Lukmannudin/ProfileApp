@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".onboarding.ScreenFragmentSatu"
-    android:background="@color/colorPrimary"
+    android:background="#16a085"
     android:id="@+id/onBoardsatu"
     >
 

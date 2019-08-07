@@ -4,6 +4,11 @@ import android.view.View;
 
 import androidx.viewpager.widget.ViewPager;
 
+
+// Tanggal Pengerjaan : 7 Agustus 2019
+// NIM : 10116347
+// Nama : Lukmannudin
+// Kelas :IF - 8
 public class DepthPageTransformer implements ViewPager.PageTransformer {
     private static final float MIN_SCALE = 0.75f;
 

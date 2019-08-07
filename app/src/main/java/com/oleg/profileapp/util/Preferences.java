@@ -3,10 +3,13 @@ package com.oleg.profileapp.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.oleg.profileapp.model.User;
 
+// Tanggal Pengerjaan : 7 Agustus 2019
+// NIM : 10116347
+// Nama : Lukmannudin
+// Kelas :IF - 8
 public class Preferences {
 
     SharedPreferences sharedPreferences;
@@ -24,6 +27,15 @@ public class Preferences {
     Preferences(Context context) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         editor = sharedPreferences.edit();
+    }
+
+    public void setOnBoardingStopped(boolean status) {
+        editor.putBoolean(ONBOARDINGSTOPPED, status);
+        editor.apply();
+    }
+
+    public boolean onBoardingStopped() {
+        return sharedPreferences.getBoolean(ONBOARDINGSTOPPED, false);
     }
 
     public void saveLogin(User user) {
@@ -53,7 +65,7 @@ public class Preferences {
         return user;
     }
 
-    public void deleteLogin(){
+    public void deleteLogin() {
         editor.clear();
         editor.apply();
     }
@@ -68,6 +80,8 @@ public class Preferences {
     static String INSTAGRAM = "instagram";
     static String FACEBOOK = "facebook";
     static String PASSWORD = "password";
+
+    static String ONBOARDINGSTOPPED = "onboardingstopped";
 
 
 }

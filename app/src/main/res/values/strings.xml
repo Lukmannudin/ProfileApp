@@ -43,4 +43,8 @@
     <string name="password_error">password required</string>
     <string name="retype_password_error">password not match</string>
     <string name="email_not_valid">This field has to be a valid email address</string>
+    <string name="account_already_exist">Account already exist</string>
+    <string name="update">Update</string>
+
+
 </resources>

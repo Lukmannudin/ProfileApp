@@ -2,7 +2,6 @@ package com.oleg.profileapp.login;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +18,7 @@ import com.oleg.profileapp.signup.SignupActivity;
 import com.oleg.profileapp.util.Preferences;
 
 import java.util.Objects;
+
 // Tanggal Pengerjaan : 19 Mei 2019
 // NIM : 10116347
 // Nama : Lukmannudin
@@ -39,9 +39,8 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         setContentView(R.layout.activity_login);
         initView();
 
-
-        if (onLoginSucceed()){
-            startActivity(new Intent(this,MainActivity.class));
+        if (onLoginSucceed()) {
+            startActivity(new Intent(this, MainActivity.class));
         }
 
         mPresenter = new LoginPresenter(this);
@@ -58,11 +57,9 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
     }
 
-    boolean onLoginSucceed(){
+    boolean onLoginSucceed() {
         Preferences preferences = Preferences.getInstance(this);
         User user = preferences.getUserLogin();
-        Log.d("cekcekcek","username: "+user.getUsername());
-        Log.d("cekcekcek","password: "+user.getPassword());
         return !user.getUsername().equals("") && !user.getPassword().equals("");
     }
 
@@ -91,6 +88,12 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         } else {
             progressBar.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
     }
 
     @Override

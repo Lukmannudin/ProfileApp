@@ -1,9 +1,11 @@
 package com.oleg.profileapp.list_friends;
 
+import android.content.Context;
 import android.content.Intent;
 
 import com.oleg.profileapp.BasePresenter;
 import com.oleg.profileapp.BaseView;
+import com.oleg.profileapp.model.Friend;
 import com.oleg.profileapp.model.User;
 
 import java.util.List;
@@ -13,15 +15,19 @@ import java.util.List;
 // Nama : Lukmannudin
 // Kelas :IF - 8
 
-public class ListFriendsContract {
+class ListFriendsContract {
     interface View extends BaseView<Presenter>{
         void setLoadingIndicator(boolean active);
 
-        void showListFriends(List<User> users);
+        void showListFriends(List<Friend> friends);
 
-        void showFriendDetailUI(List<User> users, User user, int index);
+        void showFriendDetailUI(List<Friend> friends, Friend friend, int index);
 
         void showMessage(String message);
+
+        void showMessageSuccess(Friend friend, String message);
+
+        void showMessageFailed(String message);
 
         void callFriend(Intent intent);
     }
@@ -29,14 +35,16 @@ public class ListFriendsContract {
     interface Presenter extends BasePresenter {
         void loadListFriends(boolean forceUpdate);
 
-        void addNewFriend();
+        void addNewFriend(Friend friend);
 
-        void openDetailFriendDetail(List<User> users, User requestedUser, int index);
+        void start(Context context);
 
-        void onDeleteFriend(User user);
+        void openDetailFriendDetail(List<Friend> friends, Friend requestedFriend, int index);
 
-        void onCallFriend(User user);
+        void onDeleteFriend(Friend friend);
 
-        void onEditFriend(User user, List<User> users, int index);
+        void onCallFriend(Friend friend);
+
+        void onEditFriend(Friend friend);
     }
 }

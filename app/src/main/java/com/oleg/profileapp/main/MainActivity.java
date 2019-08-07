@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         super.onBackPressed();
         if (mPager.getCurrentItem() == 0){
             super.onBackPressed();
-            finish();
+            finishAffinity();
         } else {
             mPager.setCurrentItem(mPager.getCurrentItem() - 1);
         }
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
             preferences.deleteLogin();
             startActivity(new Intent(this, LoginActivity.class));
         }
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 }
 

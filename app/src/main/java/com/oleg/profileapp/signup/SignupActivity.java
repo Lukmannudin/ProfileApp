@@ -16,7 +16,10 @@ import com.oleg.profileapp.model.User;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+// Tanggal Pengerjaan : 7 Agustus 2019
+// NIM : 10116347
+// Nama : Lukmannudin
+// Kelas :IF - 8
 public class SignupActivity extends AppCompatActivity implements SignupContract.View {
     ProgressBar progressBar;
     EditText edtNim, edtUsername, edtPassword, edtRetypePassword, edtClass, edtTelephone, edtEmail, edtTwitter, edtFacebook, edtInstagram;
@@ -99,7 +102,10 @@ public class SignupActivity extends AppCompatActivity implements SignupContract.
             statusForm = false;
         }
 
-
+        if (mPresenter.checkAlreadyAccount(edtUsername.getText().toString())){
+            edtUsername.setError(getResources().getString(R.string.account_already_exist));
+            statusForm = false;
+        }
         return statusForm;
     }
 

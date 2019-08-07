@@ -2,13 +2,8 @@ package com.oleg.profileapp.profile;
 
 import android.content.Context;
 
-import com.oleg.profileapp.model.Profile;
 import com.oleg.profileapp.model.User;
-import com.oleg.profileapp.repo.Repository;
 import com.oleg.profileapp.util.Preferences;
-
-import java.util.ArrayList;
-import java.util.List;
 
 // Tanggal Pengerjaan : 19 Mei 2019
 // NIM : 10116347
