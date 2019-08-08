@@ -14,7 +14,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint=""
             android:text="NIM" />
 
         <EditText
@@ -22,6 +21,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:hint="@string/input_nim"
             android:inputType="numberSigned" />
     </LinearLayout>
 
@@ -41,6 +41,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:hint="@string/input_name"
             android:inputType="textPersonName" />
     </LinearLayout>
 
@@ -59,7 +60,8 @@
             android:id="@+id/tv_friend_detail_kelas"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:hint="@string/input_class" />
     </LinearLayout>
 
     <LinearLayout
@@ -78,6 +80,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:hint="@string/input_email"
             android:inputType="textEmailAddress" />
     </LinearLayout>
 
@@ -97,6 +100,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:hint="@string/input_telepon"
             android:inputType="phone" />
     </LinearLayout>
 
@@ -115,7 +119,8 @@
             android:id="@+id/tv_friend_detail_twitter"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:hint="@string/input_twitter" />
     </LinearLayout>
 
     <LinearLayout
@@ -133,7 +138,8 @@
             android:id="@+id/tv_friend_detail_instagram"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:hint="@string/input_instagram" />
     </LinearLayout>
 
     <LinearLayout
@@ -151,7 +157,8 @@
             android:id="@+id/tv_friend_detail_facebook"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:hint="@string/input_facebook" />
     </LinearLayout>
 
     <Button
