@@ -2,6 +2,7 @@ package com.oleg.profileapp.signup;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +15,7 @@ import com.oleg.profileapp.R;
 import com.oleg.profileapp.login.LoginActivity;
 import com.oleg.profileapp.model.User;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 // Tanggal Pengerjaan : 7 Agustus 2019
@@ -22,7 +24,8 @@ import java.util.regex.Pattern;
 // Kelas :IF - 8
 public class SignupActivity extends AppCompatActivity implements SignupContract.View {
     ProgressBar progressBar;
-    EditText edtNim, edtUsername, edtPassword, edtRetypePassword, edtClass, edtTelephone, edtEmail, edtTwitter, edtFacebook, edtInstagram;
+    EditText edtNim, edtUsername, edtPassword, edtRetypePassword, edtClass, edtTelephone, edtEmail, edtTwitter, edtFacebook, edtInstagram,
+    edtDescription;
     Button btnSignup;
 
     private SignupContract.Presenter mPresenter;
@@ -33,6 +36,9 @@ public class SignupActivity extends AppCompatActivity implements SignupContract.
         setContentView(R.layout.activity_signup);
         initView();
         mPresenter = new SignupPresenter(this);
+
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setElevation(0);
 
         btnSignup.setOnClickListener(view -> {
 
@@ -47,6 +53,7 @@ public class SignupActivity extends AppCompatActivity implements SignupContract.
                 user.setInstagram(edtInstagram.getText().toString());
                 user.setFacebook(edtFacebook.getText().toString());
                 user.setPassword(edtPassword.getText().toString());
+                user.setDescription(edtDescription.getText().toString());
                 mPresenter.signup(user);
             }
         });
@@ -102,10 +109,16 @@ public class SignupActivity extends AppCompatActivity implements SignupContract.
             statusForm = false;
         }
 
+        if (edtDescription.getText().toString().isEmpty()){
+            edtDescription.setError(getResources().getString(R.string.description_error));
+            statusForm = false;
+        }
+
         if (mPresenter.checkAlreadyAccount(edtUsername.getText().toString())){
             edtUsername.setError(getResources().getString(R.string.account_already_exist));
             statusForm = false;
         }
+
         return statusForm;
     }
 
@@ -165,6 +178,7 @@ public class SignupActivity extends AppCompatActivity implements SignupContract.
         edtTwitter = findViewById(R.id.signup_edt_twitter);
         edtFacebook = findViewById(R.id.signup_edt_facebook);
         edtInstagram = findViewById(R.id.signup_edt_instagram);
+        edtDescription = findViewById(R.id.signup_edt_description);
 
         btnSignup = findViewById(R.id.login_btn_signup);
     }
@@ -173,5 +187,13 @@ public class SignupActivity extends AppCompatActivity implements SignupContract.
     protected void onResume() {
         super.onResume();
         mPresenter.start();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            super.onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

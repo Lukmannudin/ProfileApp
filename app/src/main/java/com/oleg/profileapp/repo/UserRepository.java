@@ -2,6 +2,7 @@ package com.oleg.profileapp.repo;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteException;
+import android.util.Log;
 
 import androidx.room.Room;
 
@@ -73,13 +74,24 @@ public class UserRepository {
     public boolean updateUser(User user){
         boolean status = true;
         try {
-            database.userDao().update(user);
+            database.userDao().updateContact(
+                    user.getNim(),
+                    user.getUsername(),
+                    user.getKelas(),
+                    user.getDescription(),
+                    user.getTelepon(),
+                    user.getEmail(),
+                    user.getInstagram(),
+                    user.getTwitter(),
+                    user.getFacebook()
+                    );
         } catch (SQLiteException e){
             e.printStackTrace();
             status =false;
         }
         return status;
     }
+
 
 
     static String[] profileData = new String[]{

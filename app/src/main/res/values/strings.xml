@@ -42,6 +42,7 @@
     <string name="facebook_error">facebook required</string>
     <string name="password_error">password required</string>
     <string name="retype_password_error">password not match</string>
+    <string name="description_error">description required</string>
     <string name="email_not_valid">This field has to be a valid email address</string>
     <string name="account_already_exist">Account already exist</string>
     <string name="update">Update</string>
@@ -54,6 +55,8 @@
     <string name="input_twitter">Input your twitter here</string>
     <string name="input_instagram">Input your instagram here</string>
     <string name="input_facebook">Input your facebook here</string>
+    <string name="description">description</string>
+    <string name="update_bottom_sheet_label">Update %s</string>
 
 
 </resources>

@@ -57,14 +57,15 @@
         app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:inputType="textPassword"
             android:id="@+id/login_edt_password"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/login_btn_login"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
@@ -77,6 +78,7 @@
         android:id="@+id/login_label_sign_up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/vertical_margin"
         android:layout_marginEnd="8dp"
         android:text="@string/no_account_yet"
         app:layout_constraintEnd_toStartOf="@+id/login_to_signup"
@@ -86,6 +88,7 @@
         android:id="@+id/login_to_signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/vertical_margin"
         android:layout_marginEnd="@dimen/horizontal_margin"
         android:text="@string/sign_up"
         android:textColor="@android:color/holo_blue_dark"

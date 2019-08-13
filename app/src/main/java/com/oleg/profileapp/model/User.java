@@ -45,6 +45,9 @@ public class User implements Parcelable {
     @ColumnInfo(name = "password")
     private String password;
 
+    @ColumnInfo(name = "description")
+    private String description;
+
     public User(){
 
     }
@@ -59,6 +62,7 @@ public class User implements Parcelable {
         instagram = in.readString();
         facebook = in.readString();
         password = in.readString();
+        description = in.readString();
     }
 
     @Override
@@ -72,6 +76,7 @@ public class User implements Parcelable {
         dest.writeString(instagram);
         dest.writeString(facebook);
         dest.writeString(password);
+        dest.writeString(description);
     }
 
     @Override
@@ -169,6 +174,14 @@ public class User implements Parcelable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public static Creator<User> getCREATOR() {

@@ -9,6 +9,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:paddingBottom="50dp"
         tools:context=".signup.SignupActivity">
 
         <ProgressBar
@@ -26,10 +28,21 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginTop="120dp"
-            android:src="@drawable/doormat"
+            android:src="@drawable/opportunity"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/login_label_create_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/vertical_margin"
+            android:gravity="center"
+            android:text="Create Account"
+            android:textColor="@color/colorAccent"
+            android:textSize="28sp"
+            app:layout_constraintTop_toBottomOf="@id/login_logo" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/signup_til_nim"
@@ -38,13 +51,15 @@
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            app:layout_constraintTop_toBottomOf="@id/login_logo">
+            app:layout_constraintTop_toBottomOf="@id/login_label_create_account">
 
             <com.google.android.material.textfield.TextInputEditText
+
                 android:id="@+id/signup_edt_nim"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/nim" />
+                android:hint="@string/nim"
+                android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -69,8 +84,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            app:passwordToggleEnabled="true"
-            app:layout_constraintTop_toBottomOf="@id/signup_til_username">
+            app:layout_constraintTop_toBottomOf="@id/signup_til_username"
+            app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/signup_edt_password"
@@ -197,8 +212,25 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/signup_til_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            app:layout_constraintTop_toBottomOf="@id/signup_til_instagram">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signup_edt_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/description" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
         <Button
             android:id="@+id/login_btn_signup"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/horizontal_margin"
@@ -206,7 +238,7 @@
             android:layout_marginEnd="@dimen/horizontal_margin"
             android:layout_marginBottom="50dp"
             android:text="@string/sign_up"
-            app:layout_constraintTop_toBottomOf="@+id/signup_til_instagram" />
+            app:layout_constraintTop_toBottomOf="@+id/signup_til_description" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -1,20 +1,13 @@
 package com.oleg.profileapp.main;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.NestedScrollView;
-import androidx.fragment.app.ListFragment;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Adapter;
-import android.widget.Toast;
 
-import com.google.android.material.bottomnavigation.BottomNavigationMenu;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.oleg.profileapp.R;
 import com.oleg.profileapp.contact.ContactFragment;
@@ -44,25 +37,23 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.bnv_main);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.itemProfile:
-                        mPager.setCurrentItem(menuProfile);
-                        break;
-                    case R.id.itemContact:
-                        mPager.setCurrentItem(menuContact);
-                        break;
-                    case R.id.itemListFriends:
-                        mPager.setCurrentItem(menuListFriends);
-                }
-                return false;
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.itemProfile:
+                    mPager.setCurrentItem(menuProfile);
+                    break;
+                case R.id.itemContact:
+                    mPager.setCurrentItem(menuContact);
+                    break;
+                case R.id.itemListFriends:
+                    mPager.setCurrentItem(menuListFriends);
             }
+            return false;
         });
 
         mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             MenuItem prevMenuItem;
+
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -70,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                if (prevMenuItem != null){
+                if (prevMenuItem != null) {
                     prevMenuItem.setChecked(false);
                 } else {
                     bottomNavigationView.getMenu().getItem(0).setChecked(false);
@@ -93,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (mPager.getCurrentItem() == 0){
+        if (mPager.getCurrentItem() == 0) {
             super.onBackPressed();
             finishAffinity();
         } else {
@@ -101,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setupViewPager(ViewPager viewPager){
+    private void setupViewPager(ViewPager viewPager) {
         MainAdapter pagerAdapter = new MainAdapter(getSupportFragmentManager());
         pagerAdapter.addFragment(new ProfileFragment());
         pagerAdapter.addFragment(new ContactFragment());
@@ -111,13 +102,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu,menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.item_menu_logout){
+        if (item.getItemId() == R.id.item_menu_logout) {
             Preferences preferences = Preferences.getInstance(this);
             preferences.deleteLogin();
             startActivity(new Intent(this, LoginActivity.class));

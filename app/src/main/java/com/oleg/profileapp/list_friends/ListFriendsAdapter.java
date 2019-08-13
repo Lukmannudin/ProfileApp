@@ -50,14 +50,14 @@ public class ListFriendsAdapter extends RecyclerView.Adapter<ListFriendsAdapter.
 
     class ViewHolder extends RecyclerView.ViewHolder{
         TextView tvName;
-        ImageView btnDelete;
-        ImageView btnCalling;
+        ImageView btnEdit,btnDelete,btnCalling;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.item_friend_nama);
             btnDelete = itemView.findViewById(R.id.btn_friend_delete);
             btnCalling = itemView.findViewById(R.id.btnTelepon);
+            btnEdit = itemView.findViewById(R.id.btn_friend_edit);
         }
 
         void bindItem(final Friend friend, final ListFriendsFragment.ListFriendsListener listener, int position){
@@ -66,7 +66,7 @@ public class ListFriendsAdapter extends RecyclerView.Adapter<ListFriendsAdapter.
 
             btnCalling.setOnClickListener(v -> listener.onBtnCallClick(friend));
 
-            itemView.setOnClickListener(v -> listener.onListFriendClick(mDataSet, friend, position));
+            btnEdit.setOnClickListener(v -> listener.onListFriendClick(mDataSet, friend, position));
 
         }
 

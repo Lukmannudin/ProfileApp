@@ -2,6 +2,7 @@ package com.oleg.profileapp.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -67,6 +68,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     public void onLoginSuccess(User user) {
         Preferences preferences = Preferences.getInstance(this);
         preferences.saveLogin(user);
+        Log.d("logincok",user.getDescription());
         startActivity(new Intent(this, MainActivity.class));
     }
 

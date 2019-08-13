@@ -9,6 +9,8 @@ import androidx.room.Update;
 import com.oleg.profileapp.model.User;
 
 import java.util.List;
+
+import static androidx.room.OnConflictStrategy.REPLACE;
 // Tanggal Pengerjaan : 19 Mei 2019
 // NIM : 10116347
 // Nama : Lukmannudin
@@ -26,7 +28,19 @@ public interface UserDao {
     @Query("SELECT * FROM user WHERE username = :username")
     User getUser(String username);
 
-    @Insert
+    @Query("UPDATE user SET nim = :nim, " +
+            "username = :username, " +
+            "kelas = :kelas, " +
+            "description = :description, " +
+            "telepon = :telepon, " +
+            "email = :email, " +
+            "instagram = :instagram, " +
+            "twitter = :twitter, " +
+            "facebook = :facebook")
+    void updateContact(String nim,String username,String kelas, String description,
+                       String telepon, String email, String instagram, String twitter, String facebook);
+
+    @Insert(onConflict = REPLACE)
     long createUser(User user);
 
     @Delete

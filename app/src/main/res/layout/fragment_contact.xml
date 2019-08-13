@@ -1,172 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".contact.ContactFragment">
 
-
-    <FrameLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ProgressBar
-            android:id="@+id/pb_contact"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            />
-
-        <ScrollView
-            android:id="@+id/sr_contact"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <LinearLayout
+            <ProgressBar
+                android:id="@+id/pb_contact"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center" />
+
+            <ScrollView
+                android:id="@+id/sr_contact"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:gravity="center"
-                    android:text="Contact"
-                    android:textAllCaps="true"
-                    android:textSize="32sp" />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_margin="@dimen/horizontal_margin"
-                    android:background="#2d3436"/>
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/horizontal_margin"
-                    android:layout_marginTop="@dimen/vertical_margin"
-                    android:layout_marginEnd="@dimen/horizontal_margin"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textColor="@color/colorPrimary"
-                        android:gravity="end"
-                        android:paddingEnd="@dimen/horizontal_margin"
-                        android:text="Telepon" />
+                        android:layout_marginTop="30dp"
+                        android:gravity="center"
+                        android:text="Contact"
+                        android:textAllCaps="true"
+                        android:textSize="32sp" />
 
-                    <TextView
-                        android:id="@+id/tv_contact_telepon"
-                        android:layout_width="0dp"
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_margin="@dimen/horizontal_margin"
+                        android:background="#2d3436" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:text="08912423" />
+                        android:layout_marginStart="@dimen/horizontal_margin"
+                        android:layout_marginTop="@dimen/vertical_margin"
+                        android:layout_marginEnd="@dimen/horizontal_margin"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:paddingEnd="@dimen/horizontal_margin"
+                            android:text="Telepon"
+                            android:textColor="@color/colorPrimary" />
+
+                        <TextView
+                            android:id="@+id/tv_contact_telepon"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:drawableEnd="@drawable/ic_mode_edit_black_24dp"
+                            android:text="08912423" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/horizontal_margin"
+                        android:layout_marginTop="@dimen/vertical_margin"
+                        android:layout_marginEnd="@dimen/horizontal_margin"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:paddingEnd="@dimen/horizontal_margin"
+                            android:text="Email"
+                            android:textColor="@color/colorPrimary" />
+
+                        <TextView
+                            android:id="@+id/tv_contact_email"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:drawableEnd="@drawable/ic_mode_edit_black_24dp"
+                            android:text="laodelukmannudinpriatna@gmail.com" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/horizontal_margin"
+                        android:layout_marginTop="@dimen/vertical_margin"
+                        android:layout_marginEnd="@dimen/horizontal_margin"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:paddingEnd="@dimen/horizontal_margin"
+                            android:text="Instagram"
+                            android:textColor="@color/colorPrimary" />
+
+                        <TextView
+                            android:id="@+id/tv_contact_instagram"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:drawableEnd="@drawable/ic_mode_edit_black_24dp"
+                            android:text="lukmannudinpriatna" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/horizontal_margin"
+                        android:layout_marginTop="@dimen/vertical_margin"
+                        android:layout_marginEnd="@dimen/horizontal_margin"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:paddingEnd="@dimen/horizontal_margin"
+                            android:text="Twitter"
+                            android:textColor="@color/colorPrimary" />
+
+                        <TextView
+                            android:id="@+id/tv_contact_twitter"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:drawableEnd="@drawable/ic_mode_edit_black_24dp"
+                            android:text="lord_lukman19" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/horizontal_margin"
+                        android:layout_marginTop="@dimen/vertical_margin"
+                        android:layout_marginEnd="@dimen/horizontal_margin"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:paddingEnd="@dimen/horizontal_margin"
+                            android:text="Facebook"
+                            android:textColor="@color/colorPrimary" />
+
+                        <TextView
+                            android:id="@+id/tv_contact_facebook"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:drawableEnd="@drawable/ic_mode_edit_black_24dp"
+                            android:text="Lukmannudin Priatna" />
+                    </LinearLayout>
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/horizontal_margin"
-                    android:layout_marginTop="@dimen/vertical_margin"
-                    android:layout_marginEnd="@dimen/horizontal_margin"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:textColor="@color/colorPrimary"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:paddingEnd="@dimen/horizontal_margin"
-                        android:text="Email" />
-
-                    <TextView
-                        android:id="@+id/tv_contact_email"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:text="laodelukmannudinpriatna@gmail.com" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/horizontal_margin"
-                    android:layout_marginTop="@dimen/vertical_margin"
-                    android:layout_marginEnd="@dimen/horizontal_margin"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:textColor="@color/colorPrimary"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:paddingEnd="@dimen/horizontal_margin"
-                        android:text="Instagram" />
-
-                    <TextView
-                        android:id="@+id/tv_contact_instagram"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:text="lukmannudinpriatna" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/horizontal_margin"
-                    android:layout_marginTop="@dimen/vertical_margin"
-                    android:layout_marginEnd="@dimen/horizontal_margin"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:textColor="@color/colorPrimary"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:paddingEnd="@dimen/horizontal_margin"
-                        android:text="Twitter" />
-
-                    <TextView
-                        android:id="@+id/tv_contact_twitter"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:text="lord_lukman19" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/horizontal_margin"
-                    android:layout_marginTop="@dimen/vertical_margin"
-                    android:layout_marginEnd="@dimen/horizontal_margin"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:textColor="@color/colorPrimary"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:paddingEnd="@dimen/horizontal_margin"
-                        android:text="Facebook" />
-
-                    <TextView
-                        android:id="@+id/tv_contact_facebook"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:text="Lukmannudin Priatna" />
-                </LinearLayout>
-            </LinearLayout>
-        </ScrollView>
-    </FrameLayout>
-</ScrollView>
+            </ScrollView>
+        </FrameLayout>
+    </ScrollView>
+    <include layout="@layout/bottom_sheet_profile" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

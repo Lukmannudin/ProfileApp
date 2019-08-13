@@ -28,6 +28,12 @@ public class ProfileContract {
     }
 
     interface Presenter extends BasePresenter {
+        void start(String username);
+
         void loadProfile(Context context,boolean forceUpdate);
+        void onEditNim(User user, String nim);
+        void onEditUsername(User user, String username);
+        void onEditClass(User user, String kelas);
+        void onEditDescription(User user, String description);
     }
 }

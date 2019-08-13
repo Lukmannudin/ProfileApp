@@ -101,7 +101,6 @@ public class ListFriendsPresenter implements ListFriendsContract.Presenter {
         if (db.deleteFriend(friend)) {
             repository.remove(friend);
             mView.showListFriends(repository);
-            mView.showMessage("User successfully deleted");
         } else {
             mView.showMessageFailed("User failed to delete");
         }

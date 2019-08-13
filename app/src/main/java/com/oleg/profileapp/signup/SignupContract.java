@@ -8,7 +8,7 @@ import com.oleg.profileapp.model.User;
 // NIM : 10116347
 // Nama : Lukmannudin
 // Kelas :IF - 8
-public class SignupContract {
+class SignupContract {
     interface Presenter extends BasePresenter {
         void signup(User user);
 

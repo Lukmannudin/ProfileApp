@@ -6,6 +6,6 @@
         android:width="300dp"
         android:height="300dp"
         android:gravity="center">
-        <bitmap android:src="@drawable/icon_on" />
+        <bitmap android:src="@drawable/logo" />
     </item>
 </layer-list>

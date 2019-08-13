@@ -1,8 +1,10 @@
 package com.oleg.profileapp.contact;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.oleg.profileapp.model.User;
+import com.oleg.profileapp.repo.UserRepository;
 import com.oleg.profileapp.util.Preferences;
 
 // Tanggal Pengerjaan : 19 Mei 2019
@@ -12,10 +14,12 @@ import com.oleg.profileapp.util.Preferences;
 
 public class ContactPresenter implements ContactContract.Presenter {
     private final ContactContract.View mContactView;
-    private boolean mFirstLoad = true;
 
     private User repository = new User();
     private Context context;
+    private UserRepository db;
+    private String username;
+
 
     public ContactPresenter(ContactContract.View mContactView) {
         this.mContactView = mContactView;
@@ -28,34 +32,79 @@ public class ContactPresenter implements ContactContract.Presenter {
     }
 
     @Override
-    public void loadContact(Context context, Boolean forceUpdate) {
-        loadContact(forceUpdate || mFirstLoad, true);
-        this.context = context;
+    public void start(String username) {
+        this.username = username;
+
     }
 
-    public void loadContact(boolean forceUpdate, final boolean showLoadingUI){
-        if (showLoadingUI){
+    @Override
+    public void loadContact(Context context, Boolean forceUpdate) {
+        loadContact(forceUpdate, true);
+        this.context = context;
+        db = UserRepository.getInstance(context);
+    }
+
+    public void loadContact(boolean forceUpdate, final boolean showLoadingUI) {
+        if (showLoadingUI) {
             mContactView.setLoadingIndicator(true);
         }
 
-        if (forceUpdate){
-            Preferences preferences = Preferences.getInstance(context);
-            repository = preferences.getUserLogin();
+        Preferences preferences = Preferences.getInstance(context);
+        repository = preferences.getUserLogin();
+
+        if (forceUpdate) {
+            repository = db.getUser(repository.getUsername());
+            Preferences.getInstance(context).saveLogin(repository);
         }
 
 
-        if (showLoadingUI){
+        if (showLoadingUI) {
             mContactView.setLoadingIndicator(false);
         }
 
         processProfile(repository);
 
-
-
-
     }
 
-    public void processProfile(User users){
+    private void processProfile(User users) {
         mContactView.showContact(users);
+    }
+
+    @Override
+    public void onEditTelepon(User user, String telepon) {
+        user.setTelepon(telepon);
+        updateProfile(user);
+    }
+
+    @Override
+    public void onEditEmail(User user, String email) {
+        user.setEmail(email);
+        updateProfile(user);
+    }
+
+    @Override
+    public void onEditInstagram(User user, String instagram) {
+        user.setInstagram(instagram);
+        updateProfile(user);
+    }
+
+    @Override
+    public void onEditTwitter(User user, String twitter) {
+        user.setTwitter(twitter);
+        updateProfile(user);
+    }
+
+    @Override
+    public void onEditFacebook(User user, String facebook) {
+        user.setFacebook(facebook);
+        updateProfile(user);
+    }
+
+    private void updateProfile(User user) {
+        if (db.updateUser(user)) {
+            loadContact(context, true);
+        } else {
+            Toast.makeText(context, "Update Failed", Toast.LENGTH_SHORT).show();
+        }
     }
 }

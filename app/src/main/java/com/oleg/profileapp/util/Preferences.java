@@ -48,6 +48,7 @@ public class Preferences {
         editor.putString(INSTAGRAM, user.getInstagram());
         editor.putString(FACEBOOK, user.getFacebook());
         editor.putString(PASSWORD, user.getPassword());
+        editor.putString(DESCRIPTION, user.getDescription());
         editor.apply();
     }
 
@@ -62,6 +63,7 @@ public class Preferences {
         user.setInstagram(sharedPreferences.getString(INSTAGRAM, ""));
         user.setFacebook(sharedPreferences.getString(FACEBOOK, ""));
         user.setPassword(sharedPreferences.getString(PASSWORD, ""));
+        user.setDescription(sharedPreferences.getString(DESCRIPTION,""));
         return user;
     }
 
@@ -80,6 +82,7 @@ public class Preferences {
     static String INSTAGRAM = "instagram";
     static String FACEBOOK = "facebook";
     static String PASSWORD = "password";
+    static String DESCRIPTION = "description";
 
     static String ONBOARDINGSTOPPED = "onboardingstopped";
 

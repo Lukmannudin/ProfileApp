@@ -22,5 +22,12 @@ public interface ContactContract {
 
     interface Presenter extends BasePresenter {
         void loadContact(Context context,Boolean forceUpdate);
+        void start(String username);
+
+        void onEditTelepon(User user, String telepon);
+        void onEditEmail(User user, String email);
+        void onEditInstagram(User user, String instagram);
+        void onEditTwitter(User user, String twitter);
+        void onEditFacebook(User user, String facebook);
     }
 }

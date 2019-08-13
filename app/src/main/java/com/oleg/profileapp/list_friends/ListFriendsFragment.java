@@ -1,12 +1,11 @@
 package com.oleg.profileapp.list_friends;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -16,22 +15,24 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.oleg.profileapp.R;
+import com.oleg.profileapp.list_friends.AddFriend.AddFriendActivity;
 import com.oleg.profileapp.model.Friend;
-import com.oleg.profileapp.model.User;
-import com.oleg.profileapp.util.Preferences;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 
 // Tanggal Pengerjaan : 19 Mei 2019
 // NIM : 10116347
@@ -48,8 +49,10 @@ public class ListFriendsFragment extends Fragment implements ListFriendsContract
     private Button btnUpdate;
     private FrameLayout frameLayout;
     private Dialog dialog;
+    private AlertDialog.Builder alertDialog;
+    private FloatingActionButton fbBtn;
+    private TextView nim, nama, kelas, email, telepon, instagram, facebook, twitter;
 
-    TextView nim, nama, kelas, email, telepon, instagram, facebook, twitter;
     LinearLayout linearLayout;
 
 
@@ -70,6 +73,9 @@ public class ListFriendsFragment extends Fragment implements ListFriendsContract
         View view = inflater.inflate(R.layout.fragment_list_friends, container, false);
         recyclerView = view.findViewById(R.id.rv_listFriends);
         frameLayout = view.findViewById(R.id.listFriendLayout);
+        fbBtn = view.findViewById(R.id.list_friends_addbtn);
+        alertDialog = new AlertDialog.Builder(getContext());
+
         setHasOptionsMenu(true);
         return view;
     }
@@ -87,6 +93,8 @@ public class ListFriendsFragment extends Fragment implements ListFriendsContract
         recyclerView.addItemDecoration(mDividerItemDecoration);
 
         recyclerView.setAdapter(mAdapter);
+
+        fbBtn.setOnClickListener(view -> addFriend());
     }
 
     @Override
@@ -143,7 +151,7 @@ public class ListFriendsFragment extends Fragment implements ListFriendsContract
             mAdapter = new ListFriendsAdapter(friends, mItemListener);
             recyclerView.setAdapter(mAdapter);
             dialog.dismiss();
-            Snackbar.make(frameLayout, "Data Berhasil Diubah", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(frameLayout, "Friend Updated", Snackbar.LENGTH_LONG).show();
         });
 
         dialog.show();
@@ -178,76 +186,51 @@ public class ListFriendsFragment extends Fragment implements ListFriendsContract
         }
 
         @Override
-        public void onBtnDeleteClick(Friend clickeListFriend) {
-            mPresenter.onDeleteFriend(clickeListFriend);
+        public void onBtnDeleteClick(Friend clickedFriend) {
+            onDeleteFriend(clickedFriend);
         }
     };
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.list_friend_menu, menu);
+    private DialogInterface.OnClickListener dialogYesOrNoListener(Friend clickeListFriend) {
+        return (dialogInterface, which) -> {
+            switch (which) {
+                case DialogInterface.BUTTON_POSITIVE:
+                    mPresenter.onDeleteFriend(clickeListFriend);
+                    break;
+                case DialogInterface.BUTTON_NEGATIVE:
+                    break;
+            }
+        };
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.tambah_teman) {
-            dialog = new Dialog(Objects.requireNonNull(getActivity()));
-            dialog.setContentView(R.layout.activity_friend_detail);
-            dialog.setTitle("Tambah Teman");
-
-            nim = dialog.findViewById(R.id.tv_friend_detail_nim);
-            nama = dialog.findViewById(R.id.tv_friend_detail_nama);
-            kelas = dialog.findViewById(R.id.tv_friend_detail_kelas);
-            email = dialog.findViewById(R.id.tv_friend_detail_email);
-            telepon = dialog.findViewById(R.id.tv_friend_detail_telepon);
-            instagram = dialog.findViewById(R.id.tv_friend_detail_instagram);
-            twitter = dialog.findViewById(R.id.tv_friend_detail_twitter);
-            facebook = dialog.findViewById(R.id.tv_friend_detail_facebook);
-            btnUpdate = dialog.findViewById(R.id.btn_update);
-            btnUpdate.setText("Tambah");
-
-            Friend friend = new Friend();
-            nim.setText(friend.getNim());
-            nama.setText(friend.getUsername());
-            kelas.setText(friend.getKelas());
-            email.setText(friend.getEmail());
-            telepon.setText(friend.getTelepon());
-            instagram.setText(friend.getInstagram());
-            twitter.setText(friend.getTwitter());
-            facebook.setText(friend.getFacebook());
-
-            btnUpdate.setOnClickListener(v -> {
-                friend.setNim(nim.getText().toString());
-                friend.setUsername(nama.getText().toString());
-                friend.setKelas(kelas.getText().toString());
-                friend.setEmail(email.getText().toString());
-                friend.setTelepon(telepon.getText().toString());
-                friend.setInstagram(instagram.getText().toString());
-                friend.setTwitter(twitter.getText().toString());
-                friend.setFacebook(facebook.getText().toString());
-
-                User currentUser = Preferences.getInstance(getActivity()).getUserLogin();
-                friend.setUserid(currentUser.getId());
-
-                if (nim.getText().toString().isEmpty() || nama.getText().toString().isEmpty() || kelas.getText().toString().isEmpty()
-                        || telepon.getText().toString().isEmpty() || email.getText().toString().isEmpty()
-                ) {
-                    Toast.makeText(getActivity(), "Please complete your fields!", Toast.LENGTH_LONG).show();
-                } else {
-                    mPresenter.addNewFriend(friend);
-                }
-
-                dialog.dismiss();
-            });
-
-            dialog.show();
-            Window window = dialog.getWindow();
-            assert window != null;
-            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    private void onDeleteFriend(Friend clickedFriend) {
+        if (getActivity() != null) {
+            new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("Are you sure?")
+                    .setContentText("Won't be able to recover this file!")
+                    .setConfirmText("Yes,delete it!")
+                    .setConfirmClickListener(sDialog -> {
+                        sDialog
+                                .setTitleText("Deleted!")
+                                .setContentText("Your imaginary file has been deleted!")
+                                .setConfirmText("OK")
+                                .setConfirmClickListener(null)
+                                .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                        mPresenter.onDeleteFriend(clickedFriend);
+                    })
+                    .show();
+        } else {
+            onDeleteDefault(clickedFriend);
         }
+    }
 
-        return super.onOptionsItemSelected(item);
+    private void onDeleteDefault(Friend clickedFriend) {
+        alertDialog.setMessage("Are you sure?").setPositiveButton("YES", dialogYesOrNoListener(clickedFriend))
+                .setNegativeButton("No", dialogYesOrNoListener(clickedFriend)).show();
+    }
+
+    private void addFriend() {
+        startActivity(new Intent(getContext(), AddFriendActivity.class));
     }
 
     @Override
