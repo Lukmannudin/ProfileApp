@@ -9,6 +9,11 @@ import androidx.fragment.app.Fragment;
 
 import com.oleg.profileapp.R;
 
+// Tanggal Pengerjaan : 7 Agustus 2019
+// NIM : 10116347
+// Nama : Lukmannudin
+// Kelas :IF - 8
+
 
 public class AboutMeFragment extends Fragment {
 
