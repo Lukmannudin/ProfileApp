@@ -10,6 +10,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.oleg.profileapp.R;
+import com.oleg.profileapp.aboutme.AboutMeFragment;
 import com.oleg.profileapp.contact.ContactFragment;
 import com.oleg.profileapp.list_friends.ListFriendsFragment;
 import com.oleg.profileapp.login.LoginActivity;
@@ -22,9 +23,10 @@ import com.oleg.profileapp.util.Preferences;
 // Kelas :IF - 8
 
 public class MainActivity extends AppCompatActivity {
-    private int menuProfile = 0;
-    private int menuContact = 1;
-    private int menuListFriends = 2;
+    private int menuAboutMe = 0;
+    private int menuProfile = 1;
+    private int menuContact = 2;
+    private int menuListFriends = 3;
 
     BottomNavigationView bottomNavigationView;
     private ViewPager mPager;
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
+                case R.id.itemAboutMe:
+                    mPager.setCurrentItem(menuAboutMe);
                 case R.id.itemProfile:
                     mPager.setCurrentItem(menuProfile);
                     break;
@@ -94,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         MainAdapter pagerAdapter = new MainAdapter(getSupportFragmentManager());
+        pagerAdapter.addFragment(new AboutMeFragment());
         pagerAdapter.addFragment(new ProfileFragment());
         pagerAdapter.addFragment(new ContactFragment());
         pagerAdapter.addFragment(new ListFriendsFragment());
